@@ -1,74 +1,27 @@
-{% load static %}
-<!DOCTYPE HTML>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>jQuery File Upload Example</title>
-</head>
-<body>
-<input id="fileupload" type="file" name="files[]" multiple>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="{% static 'js/jquery.ui.widget.js' %}"></script>
-<script src="{% static 'js/jquery.iframe-transport.js' %}"></script>
-<script src="{% static 'js/jquery.fileupload.js' %}"></script>
-<script>
-    // Set a custom X-CSRFToken header to the value of the CSRF token on each XMLHttpRequest
-    // https://docs.djangoproject.com/en/2.0/ref/csrf/#acquiring-the-token-if-csrf-use-sessions-is-false
-    function getCookie(name) {
-        var cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            var cookies = document.cookie.split(';');
-            for (var i = 0; i < cookies.length; i++) {
-                var cookie = jQuery.trim(cookies[i]);
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
-    }
+{% extends "base.html" %}
 
-    $(function () {
-        $('#fileupload').fileupload({
-            // A string containing the URL to which the request is sent. (URL pointing Django view)
-            url: 'upload',
-
-            // The type of data that is expected back from the server. (default: 'json')
-            dataType: 'json',
-
-            // By default, each file of a selection is uploaded using an individual request for XHR type uploads.
-            // Set this option to false to upload file selections in one request each. (default: true)
-            singleFileUploads: true,
-
-            // Callback for modification of the jqXHR object before it is sent.
-            // Use this to set custom headers, etc. The jqXHR and settings objects are passed as arguments.
-            beforeSend: function (xhr, data) {
-                xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-            },
-
-            // Callback for the start of each file upload request.
-            // If this callback returns false, the file upload request is aborted.
-            send: function (e, data) {
-                return data.files.length < 10;
-            },
-
-            // Callback for successful upload requests.
-            done: function (e, data) {
-                $.each(data.result.files, function (index, file) {
-                    console.log(data);
-
-                    $('<p/>').text(file.pk + " " + file.name + " " + file.url).appendTo(document.body);
-                });
-            },
-
-            // Callback for failed (abort or error) upload requests.
-            fail: function (e, data) {
-                console.log(data);
-            }
-        });
-    });
-</script>
-</body>
-</html>
+{% block content %}
+    <div class="container">
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>jQuery File Upload on Django Demo</h2>
+            </div>
+            <div class="card-body">
+                <p>This demo supports:</p>
+                <ul>
+                    <li>Django 2.0.1 and Pillow 5.0.0</li>
+                    <li>jQuery-File-Upload 9.19.2</li>
+                    <li>jQuery 3.2.1</li>
+                    <li>Bootstrap 4.0.0-beta.2</li>
+                </ul>
+                <p>File Upload widget with multiple file selection for jQuery. Supports cross-domain, chunked and
+                    resumable file uploads and works with Django.</p>
+                <input class="card text-white bg-success my-4" id="fileupload" type="file" name="files[]" multiple>
+            </div>
+            <div id="files" class="card-footer">
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

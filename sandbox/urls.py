@@ -10,7 +10,7 @@ urlpatterns = [
          HomeView.as_view(), name='home'),
 
     path('upload',
-         FileUploadView.as_view(), name='upload'),
+         FileUploadView.as_view(), name='file-upload'),
 
     path('admin/',
          admin.site.urls),
