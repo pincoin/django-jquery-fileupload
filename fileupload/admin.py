@@ -1,3 +1,10 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Attachment
+
+
+class AttachmentAdmin(admin.ModelAdmin):
+    list_display = ('name', 'file', 'post', 'created')
+
+
+admin.site.register(Attachment, AttachmentAdmin)

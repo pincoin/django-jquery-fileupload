@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from django.utils.text import slugify
 
 
 class Post(models.Model):
@@ -30,17 +29,17 @@ class Post(models.Model):
 
 
 class Attachment(models.Model):
+    name = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name='file name',
+        help_text="Defaults to filename, if left blank",
+    )
+
     file = models.ImageField(
         verbose_name='uploaded file',
         upload_to="attachment",
-    )
-
-    slug = models.SlugField(
-        verbose_name='slug',
-        help_text='A short label containing only letters, numbers, underscores or hyphens for URL',
-        max_length=255,
-        unique=True,
-        allow_unicode=True,
     )
 
     post = models.ForeignKey(
@@ -48,6 +47,13 @@ class Attachment(models.Model):
         verbose_name='post',
         related_name='attachments',
         on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+
+    created = models.DateTimeField(
+        verbose_name='created time',
+        auto_now_add=True,
     )
 
     def __str__(self):
@@ -56,13 +62,8 @@ class Attachment(models.Model):
     def get_absolute_url(self):
         return reverse('fileupload:attachment-detail', args=[self.slug, ])
 
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.file.name, allow_unicode=True)
-
-        super(Attachment, self).save(*args, **kwargs)
-
     def delete(self, *args, **kwargs):
         # remove a file from storage
-        self.file.delete(False)
+        self.file.delete()
 
         super(Attachment, self).delete(*args, **kwargs)
