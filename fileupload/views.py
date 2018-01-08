@@ -31,7 +31,3 @@ class FileUploadView(View):
         data = {"files": files}
 
         return JsonResponse(data)
-
-    def form_valid(self, form):
-        # self.object = form.save()
-        pass
