@@ -26,7 +26,7 @@ $(function () {
 
         // By default, each file of a selection is uploaded using an individual request for XHR type uploads.
         // Set this option to false to upload file selections in one request each. (default: true)
-        singleFileUploads: true,
+        singleFileUploads: false,
 
         // Callback for modification of the jqXHR object before it is sent.
         // Use this to set custom headers, etc. The jqXHR and settings objects are passed as arguments.
