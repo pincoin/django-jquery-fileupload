@@ -51,7 +51,6 @@
             // Callback for the start of each file upload request.
             // If this callback returns false, the file upload request is aborted.
             send: function (e, data) {
-                console.log(data);
                 return data.files.length < 10;
             },
 
@@ -70,8 +69,6 @@
             }
         });
     });
-
-
 </script>
 </body>
 </html>
