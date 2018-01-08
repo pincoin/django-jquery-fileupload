@@ -28,7 +28,7 @@ class Post(models.Model):
         return reverse('fileupload:post-detail', args=[self.slug, ])
 
 
-class Attachment(models.Model):
+class AbstractAttachment(models.Model):
     name = models.CharField(
         max_length=255,
         null=True,
@@ -42,6 +42,16 @@ class Attachment(models.Model):
         upload_to="attachment",
     )
 
+    created = models.DateTimeField(
+        verbose_name='created time',
+        auto_now_add=True,
+    )
+
+    class Meta:
+        abstract = True
+
+
+class Attachment(AbstractAttachment):
     post = models.ForeignKey(
         'fileupload.Post',
         verbose_name='post',
@@ -51,13 +61,9 @@ class Attachment(models.Model):
         null=True,
     )
 
-    created = models.DateTimeField(
-        verbose_name='created time',
-        auto_now_add=True,
-    )
+    class Meta:
+        verbose_name = 'attachment'
+        verbose_name_plural = 'attachments'
 
     def __str__(self):
-        return self.file.name
-
-    def get_absolute_url(self):
-        return reverse('fileupload:attachment-detail', args=[self.slug, ])
+        return self.name

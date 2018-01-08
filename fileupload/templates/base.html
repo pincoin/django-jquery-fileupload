@@ -40,7 +40,7 @@ Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve you
                 <a class="nav-link" href="#">Write</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/admin">Admin</a>
+                <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
             </li>
         </ul>
     </div>
@@ -64,6 +64,7 @@ Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve you
 <script src="{% static 'js/vendor/jquery.ui.widget.js' %}"></script>
 <script src="{% static 'js/vendor/jquery.iframe-transport.js' %}"></script>
 <script src="{% static 'js/vendor/jquery.fileupload.js' %}"></script>
-<script src="{% static "js/main.js" %}"></script>
+<script src="{% static "js/csrf-cookie.js" %}"></script>
+<script src="{% static "js/file-upload.js" %}"></script>
 </body>
 </html>
