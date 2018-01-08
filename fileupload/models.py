@@ -61,9 +61,3 @@ class Attachment(models.Model):
 
     def get_absolute_url(self):
         return reverse('fileupload:attachment-detail', args=[self.slug, ])
-
-    def delete(self, *args, **kwargs):
-        # remove a file from storage
-        self.file.delete()
-
-        super(Attachment, self).delete(*args, **kwargs)
