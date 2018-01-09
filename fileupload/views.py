@@ -67,7 +67,6 @@ class PostDetailView(DetailView):
 class PostCreateView(FormView):
     template_name = 'fileupload/post_create.html'
     form_class = PostForm
-    model = Post
 
     def form_valid(self, form):
         post = form.save(commit=False)
