@@ -20,7 +20,7 @@ $(function () {
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
                 console.log(data);
-                $("#files ul").append('<li>' + file.pk + ": " + file.name + '</li>');
+                $("#files ul").append('<li>' + file.pk + ': <a href="' + file.url + '">' + file.name + '</a></li>');
             });
         },
 

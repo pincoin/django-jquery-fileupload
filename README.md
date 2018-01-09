@@ -4,8 +4,8 @@ jquery-fileupload sample code based on Django 2.0
 
 # Features
 
-* How to use FileField, ModelForm, and FormView
-* How to use CSRF token using cookie
+* How to use ImageField, ModelForm, and FormMixin
+* How to use CSRF token
 * How to use jquery-fileupload
 
 # Requirements

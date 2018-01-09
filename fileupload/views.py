@@ -32,6 +32,7 @@ class FileUploadView(FormMixin, View):
                     "pk": attachment.pk,
                     "name": file.name,
                     "size": file.size,
+                    "url": attachment.file.url
                 })
 
             data = {"files": files}
