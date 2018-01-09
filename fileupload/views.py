@@ -68,10 +68,13 @@ class PostCreateView(FormView):
     template_name = 'fileupload/post_create.html'
     form_class = PostForm
 
+    def __init__(self,):
+        self.object = None
+        super(PostCreateView).__init__()
+
     def form_valid(self, form):
-        post = form.save(commit=False)
-        post.save()
+        self.object = form.save()
         return super(PostCreateView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse('post-list')
+        return reverse('post-detail', args=[self.object.slug])
