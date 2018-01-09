@@ -14,6 +14,7 @@ jquery-fileupload sample code based on Django 2.0
 * [jQuery-File-Upload](http://aquantum-demo.appspot.com/file-upload) developed by Sebastian Tschan ([source](https://github.com/blueimp/jQuery-File-Upload))
 * Django 2.x
 * Pillow 5.x
+* django-crispy-forms
 
 # Installation
 
