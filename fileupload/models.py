@@ -25,7 +25,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('fileupload:post-detail', args=[self.slug, ])
+        return reverse('post-detail', args=[self.slug, ])
 
 
 class AbstractAttachment(models.Model):
