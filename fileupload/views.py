@@ -1,11 +1,13 @@
 from django.http import JsonResponse
 from django.views.generic import (
-    TemplateView, View
+    TemplateView, View, ListView, DetailView
 )
 from django.views.generic.edit import FormMixin
 
 from .forms import AttachmentForm
-from .models import Attachment
+from .models import (
+    Attachment, Post
+)
 
 
 class HomeView(TemplateView):
@@ -43,3 +45,15 @@ class FileUploadView(FormMixin, View):
                 'status': 'false',
                 'message': 'Bad Request'
             }, status=400)
+
+
+class PostListView(ListView):
+    model = Post
+    context_object_name = 'posts'
+    template_name = 'fileupload/post_list.html'
+
+
+class PostDetailView(DetailView):
+    model = Post
+    context_object_name = 'post'
+    template_name = 'fileupload/post_detail.html'
