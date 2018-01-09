@@ -64,5 +64,6 @@ class PostDetailView(DetailView):
 
 
 class PostCreateView(CreateView):
-    template_name = 'fileupload/post_create.html'
+    model = Post
     form_class = PostForm
+    template_name = 'fileupload/post_create.html'
