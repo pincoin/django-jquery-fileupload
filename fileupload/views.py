@@ -16,7 +16,8 @@ class FileUploadView(FormMixin, View):
     form_class = AttachmentForm
 
     def post(self, request, *args, **kwargs):
-        form = AttachmentForm(self.request.POST, self.request.FILES)
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
 
         files = []
 
@@ -34,6 +35,11 @@ class FileUploadView(FormMixin, View):
                     "size": file.size,
                 })
 
-        data = {"files": files}
+            data = {"files": files}
 
-        return JsonResponse(data)
+            return JsonResponse(data)
+        else:
+            return JsonResponse({
+                'status': 'false',
+                'message': 'Bad Request'
+            }, status=400)

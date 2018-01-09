@@ -10,12 +10,6 @@ $(function () {
         // Set this option to false to upload file selections in one request each. (default: true)
         singleFileUploads: false,
 
-        // Callback for modification of the jqXHR object before it is sent.
-        // Use this to set custom headers, etc. The jqXHR and settings objects are passed as arguments.
-        beforeSend: function (xhr, data) {
-            xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
-        },
-
         // Callback for the start of each file upload request.
         // If this callback returns false, the file upload request is aborted.
         send: function (e, data) {
