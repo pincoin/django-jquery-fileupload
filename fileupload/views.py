@@ -1,13 +1,15 @@
 from django.http import JsonResponse
-from django.urls import reverse_lazy
+from django.urls import reverse
 from django.views.generic import (
     TemplateView, View, ListView, DetailView
 )
 from django.views.generic.edit import (
-    FormMixin, CreateView
+    FormMixin, FormView
 )
 
-from .forms import AttachmentForm
+from .forms import (
+    AttachmentForm, PostForm
+)
 from .models import (
     Attachment, Post
 )
@@ -62,8 +64,15 @@ class PostDetailView(DetailView):
     template_name = 'fileupload/post_detail.html'
 
 
-class PostCreateView(CreateView):
-    model = Post
-    fields = ['title', 'slug', 'body']
+class PostCreateView(FormView):
     template_name = 'fileupload/post_create.html'
-    success_url = reverse_lazy('post-list')
+    form_class = PostForm
+    model = Post
+
+    def form_valid(self, form):
+        post = form.save(commit=False)
+        post.save()
+        return super(PostCreateView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('post-list')
