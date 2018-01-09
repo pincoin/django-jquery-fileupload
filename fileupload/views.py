@@ -16,8 +16,7 @@ class FileUploadView(FormMixin, View):
     form_class = AttachmentForm
 
     def post(self, request, *args, **kwargs):
-        form_class = self.get_form_class()
-        form = self.get_form(form_class)
+        form = AttachmentForm(self.request.POST, self.request.FILES)
 
         files = []
 
