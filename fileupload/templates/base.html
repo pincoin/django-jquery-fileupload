@@ -32,7 +32,7 @@ Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve you
             aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">jQFUD</a>
+    <a class="navbar-brand" href="{% url 'home' %}">jQFUD</a>
     <div class="collapse navbar-collapse" id="navbarToggler">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
@@ -42,7 +42,8 @@ Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve you
                 </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="{% url 'post-list' %}">Posts</a>
-                    <a class="dropdown-item" href="{% url 'post-create' %}">Write</a>
+                    <a class="dropdown-item" href="{% url 'post-create' %}">Write1</a>
+                    <a class="dropdown-item" href="{% url 'post-create' %}">Write2</a>
                 </div>
             </li>
             <li class="nav-item dropdown">
