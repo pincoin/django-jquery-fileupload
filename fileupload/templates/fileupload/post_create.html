@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
     <div class="container">
         <div class="card mt-4">
@@ -10,6 +12,18 @@
                 {% load crispy_forms_tags %}
                 {% crispy form %}
             </div>
+            <div id="files" class="card-footer">
+                <ul>
+                </ul>
+            </div>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{% static 'js/vendor/jquery.ui.widget.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.iframe-transport.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery.fileupload.js' %}"></script>
+    <script src="{% static 'js/csrf-cookie.js' %}"></script>
+    <script src="{% static "js/basic-upload.js" %}"></script>
 {% endblock %}

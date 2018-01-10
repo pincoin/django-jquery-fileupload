@@ -1,7 +1,9 @@
+var csrftoken = getCookie('csrftoken');
+
 $(function () {
-    $('#fileupload').fileupload({
+    $('#id_files').fileupload({
         // A string containing the URL to which the request is sent. (URL pointing Django view)
-        url: 'upload',
+        url: '/upload',
 
         // The type of data that is expected back from the server. (default: 'json')
         dataType: 'json',
@@ -9,6 +11,11 @@ $(function () {
         // By default, each file of a selection is uploaded using an individual request for XHR type uploads.
         // Set this option to false to upload file selections in one request each. (default: true)
         singleFileUploads: false,
+
+        // Callback for setting the token on the AJAX request
+        beforeSend: function (xhr, data) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        },
 
         // Callback for the start of each file upload request.
         // If this callback returns false, the file upload request is aborted.
