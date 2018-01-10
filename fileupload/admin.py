@@ -10,7 +10,7 @@ class AttachmentAdmin(admin.ModelAdmin):
 
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug')
+    list_display = ('title', 'created')
 
 
 admin.site.register(Attachment, AttachmentAdmin)

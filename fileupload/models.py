@@ -13,19 +13,19 @@ class Post(models.Model):
         verbose_name='content body',
     )
 
-    slug = models.SlugField(
-        verbose_name='slug',
-        help_text='A short label containing only letters, numbers, underscores or hyphens for URL',
-        max_length=255,
-        unique=True,
-        allow_unicode=True,
+    created = models.DateTimeField(
+        verbose_name='created time',
+        auto_now_add=True,
     )
+
+    class Meta:
+        ordering = ['-created']
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('post-detail', args=[self.slug, ])
+        return reverse('post-detail', args=[self.pk, ])
 
 
 class AbstractAttachment(models.Model):
@@ -64,6 +64,7 @@ class Attachment(AbstractAttachment):
     class Meta:
         verbose_name = 'attachment'
         verbose_name_plural = 'attachments'
+        ordering = ['-created']
 
     def __str__(self):
         return self.name
