@@ -1,4 +1,8 @@
+// Acquiring the token when CSRF_USE_SESSIONS is False
 var csrftoken = getCookie('csrftoken');
+
+// Acquiring the token when CSRF_USE_SESSIONS is True
+// var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
 
 $(function () {
     $('#id_files').fileupload({
@@ -14,7 +18,9 @@ $(function () {
 
         // Callback for setting the token on the AJAX request
         beforeSend: function (xhr, data) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            if (!csrfSafeMethod(data.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
         },
 
         // Callback for the start of each file upload request.
@@ -26,14 +32,12 @@ $(function () {
         // Callback for successful upload requests.
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
-                console.log(data);
                 $("#files ul").append('<li>' + file.pk + ': <a href="' + file.url + '">' + file.name + '</a></li>');
             });
         },
 
         // Callback for failed (abort or error) upload requests.
         fail: function (e, data) {
-            console.log(data);
         }
     });
 });

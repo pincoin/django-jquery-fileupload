@@ -15,3 +15,9 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+// Check if HTTP methods do not require CSRF protection
+// https://docs.djangoproject.com/en/2.0/ref/csrf/#setting-the-token-on-the-ajax-request
+function csrfSafeMethod(method) {
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
