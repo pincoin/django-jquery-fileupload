@@ -26,6 +26,12 @@ $(function () {
         done: function (e, data) {
             $.each(data.result.files, function (index, file) {
                 $("#files ul").append('<li>' + file.pk + ': <a href="' + file.url + '">' + file.name + '</a></li>');
+
+                $("<input>", {
+                    type: "hidden",
+                    name: "attachments",
+                    value: file.pk
+                }).appendTo("form");
             });
         },
 
