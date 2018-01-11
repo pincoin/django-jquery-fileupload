@@ -1,5 +1,3 @@
-from pprint import pprint
-
 from django.http import JsonResponse
 from django.views.generic import (
     TemplateView, View, ListView, DetailView
@@ -9,7 +7,7 @@ from django.views.generic.edit import (
 )
 
 from .forms import (
-    AttachmentForm, PostForm
+    AttachmentForm, PostForm, PostAttachmentForm
 )
 from .models import (
     Attachment, Post
@@ -68,16 +66,19 @@ class PostDetailView(DetailView):
 
 class PostCreateView(CreateView):
     model = Post
-    form_class = PostForm
     template_name = 'fileupload/post_create.html'
 
+    def get_form_class(self):
+        if self.request.method == 'POST':
+            # NOTE: Hidden fields must be validated.
+            return PostAttachmentForm
+        else:
+            # NOTE: Hidden fields are appended to form by AJAX.
+            return PostForm
+
     def form_valid(self, form):
-        attachments = self.request.POST.getlist('attachments')
-        pprint(attachments)
-        print(type(attachments))
-        pprint(form.cleaned_data)
-        print(type(form.cleaned_data))
-        pprint(form.instance)
-        print(type(form.instance))
+        print(form.cleaned_data['attachments'])
+
+        # TODO: limit number, null check
 
         return super().form_valid(form)
