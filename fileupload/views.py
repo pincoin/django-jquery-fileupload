@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from django.http import JsonResponse
 from django.views.generic import (
     TemplateView, View, ListView, DetailView
@@ -22,7 +24,8 @@ class FileUploadView(FormMixin, View):
     form_class = AttachmentForm
 
     def post(self, request, *args, **kwargs):
-        form = AttachmentForm(self.request.POST, self.request.FILES)
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
 
         files = []
 
@@ -70,7 +73,11 @@ class PostCreateView(CreateView):
 
     def form_valid(self, form):
         attachments = self.request.POST.getlist('attachments')
-        print(attachments)
-        print(form.cleaned_data)
+        pprint(attachments)
+        print(type(attachments))
+        pprint(form.cleaned_data)
+        print(type(form.cleaned_data))
+        pprint(form.instance)
+        print(type(form.instance))
 
         return super().form_valid(form)
