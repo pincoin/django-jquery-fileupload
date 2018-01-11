@@ -1,9 +1,3 @@
-// Acquiring the token when CSRF_USE_SESSIONS is False
-var csrftoken = getCookie('csrftoken');
-
-// Acquiring the token when CSRF_USE_SESSIONS is True
-// var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-
 $(function () {
     $('#id_files').fileupload({
         // A string containing the URL to which the request is sent. (URL pointing Django view)
