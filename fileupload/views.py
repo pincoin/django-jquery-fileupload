@@ -89,3 +89,6 @@ class PostCreateView(CreateView):
         self.object.attachments.set(attachments)
 
         return response
+
+class PostCreateView2(PostCreateView):
+    template_name = 'fileupload/post_create2.html'
