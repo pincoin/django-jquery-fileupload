@@ -21,6 +21,7 @@ $(document).ready(function () {
             $.each(data.result.files, function (index, file) {
                 $("#files ul").append('<li>' + file.pk + ': <a href="' + file.url + '">' + file.name + '</a></li>');
 
+                // This hidden field must be sent in order to make a relationship.
                 $("<input>", {
                     type: "hidden",
                     name: "attachments",

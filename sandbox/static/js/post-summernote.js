@@ -12,6 +12,7 @@ $(document).ready(function () {
             },
             onImageUpload: function (files) {
                 $nImageInput.fileupload();
+
                 var jqXHR = $nImageInput.fileupload('send', {
                     url: '/upload',
                     files: files
@@ -21,6 +22,7 @@ $(document).ready(function () {
 
                         $("#files ul").append('<li>' + file.pk + ': <a href="' + file.url + '">' + file.name + '</a></li>');
 
+                        // This hidden field must be sent in order to make a relationship.
                         $("<input>", {
                             type: "hidden",
                             name: "attachments",
