@@ -3,7 +3,7 @@ from django.views.generic import (
     TemplateView, View, ListView, DetailView
 )
 from django.views.generic.edit import (
-    FormMixin, CreateView
+    FormMixin, CreateView, UpdateView
 )
 
 from .forms import (
@@ -93,6 +93,45 @@ class PostCreateView(CreateView):
 
 class PostCreateView2(PostCreateView):
     template_name = 'fileupload/post_create2.html'
+
+    def get_form_class(self):
+        if self.request.method == 'POST':
+            # Hidden fields for attachments must be validated.
+            return PostFileAttachmentForm
+        else:
+            # Hidden fields and file input are not prepopulated but appended to form by AJAX.
+            return PostForm
+
+
+class PostUpdateView(UpdateView):
+    model = Post
+    template_name = 'fileupload/post_update.html'
+
+    def get_form_class(self):
+        if self.request.method == 'POST':
+            # Hidden fields for attachments must be validated.
+            return PostFileAttachmentForm
+        else:
+            # Hidden fields are not prepopulated but appended to form by AJAX.
+            return PostFileForm
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        # TODO: limit number
+
+        # Attachments are not related to any post yet.
+        attachments = Attachment.objects.filter(
+            pk__in=form.cleaned_data['attachments'],
+            post__isnull=True,
+        )
+        self.object.attachments.set(attachments)
+
+        return response
+
+
+class PostUpdateView2(PostUpdateView):
+    template_name = 'fileupload/post_update2.html'
 
     def get_form_class(self):
         if self.request.method == 'POST':
