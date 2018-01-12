@@ -82,7 +82,10 @@ class PostCreateView(CreateView):
         # TODO: limit number
 
         # Attachments are not related to any post yet.
-        attachments = Attachment.objects.filter(pk__in=form.cleaned_data['attachments'], post__isnull=True)
+        attachments = Attachment.objects.filter(
+            pk__in=form.cleaned_data['attachments'],
+            post__isnull=True,
+        )
         self.object.attachments.set(attachments)
 
         return response

@@ -7,14 +7,13 @@ from .models import Post
 
 
 class AttachmentForm(forms.Form):
-    files = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), required=False)
+    files = forms.FileField(widget=forms.ClearableFileInput(
+        attrs={'multiple': True}), required=False)
 
 
 class PostForm(forms.ModelForm):
-    files = forms.FileField(widget=forms.ClearableFileInput(attrs={
-        'multiple': True,
-        'class': 'my-2',
-    }), required=False)
+    files = forms.FileField(widget=forms.ClearableFileInput(
+        attrs={'multiple': True, 'class': 'my-2'}), required=False)
 
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
