@@ -1,4 +1,4 @@
-$(function () {
+$(document).ready(function () {
     $('#id_files').fileupload({
         // A string containing the URL to which the request is sent. (URL pointing Django view)
         url: '/upload',

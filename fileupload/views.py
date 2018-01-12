@@ -7,7 +7,7 @@ from django.views.generic.edit import (
 )
 
 from .forms import (
-    AttachmentForm, PostForm, PostAttachmentForm
+    AttachmentForm, PostFileForm, PostFileAttachmentForm, PostForm
 )
 from .models import (
     Attachment, Post
@@ -71,10 +71,10 @@ class PostCreateView(CreateView):
     def get_form_class(self):
         if self.request.method == 'POST':
             # Hidden fields for attachments must be validated.
-            return PostAttachmentForm
+            return PostFileAttachmentForm
         else:
             # Hidden fields are not prepopulated but appended to form by AJAX.
-            return PostForm
+            return PostFileForm
 
     def form_valid(self, form):
         response = super().form_valid(form)
@@ -90,5 +90,14 @@ class PostCreateView(CreateView):
 
         return response
 
+
 class PostCreateView2(PostCreateView):
     template_name = 'fileupload/post_create2.html'
+
+    def get_form_class(self):
+        if self.request.method == 'POST':
+            # Hidden fields for attachments must be validated.
+            return PostFileAttachmentForm
+        else:
+            # Hidden fields and file input are not prepopulated but appended to form by AJAX.
+            return PostForm

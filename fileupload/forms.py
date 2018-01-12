@@ -12,9 +12,6 @@ class AttachmentForm(forms.Form):
 
 
 class PostForm(forms.ModelForm):
-    files = forms.FileField(widget=forms.ClearableFileInput(
-        attrs={'multiple': True, 'class': 'my-2'}), required=False)
-
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
 
@@ -30,7 +27,12 @@ class PostForm(forms.ModelForm):
         fields = ['title', 'body']
 
 
-class PostAttachmentForm(PostForm):
+class PostFileForm(PostForm):
+    files = forms.FileField(widget=forms.ClearableFileInput(
+        attrs={'multiple': True, 'class': 'my-2'}), required=False)
+
+
+class PostFileAttachmentForm(PostFileForm):
     attachments = forms.IntegerField(widget=forms.HiddenInput(), required=False)
 
     def clean_attachments(self):
