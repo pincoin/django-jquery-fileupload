@@ -70,18 +70,19 @@ class PostCreateView(CreateView):
 
     def get_form_class(self):
         if self.request.method == 'POST':
-            # NOTE: Hidden fields must be validated.
+            # Hidden fields for attachments must be validated.
             return PostAttachmentForm
         else:
-            # NOTE: Hidden fields are not prepopulated but appended to form by AJAX.
+            # Hidden fields are not prepopulated but appended to form by AJAX.
             return PostForm
 
     def form_valid(self, form):
         response = super().form_valid(form)
 
-        # TODO: limit number, null check
+        # TODO: limit number
 
-        attachments = Attachment.objects.filter(pk__in=form.cleaned_data['attachments'])
+        # Attachments are not related to any post yet.
+        attachments = Attachment.objects.filter(pk__in=form.cleaned_data['attachments'], post__isnull=True)
         self.object.attachments.set(attachments)
 
         return response
