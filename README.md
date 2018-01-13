@@ -5,8 +5,10 @@ jquery-fileupload/summernote sample code based on Django 2.0
 This demo illustrates:
 * How to use ModelForm, its inheritance and field validation
 * How to handle POST request using FormMixin
+* How to send JSON response
 * How to use ImageField and upload multiple files by jQuery-File-Upload
 * How to get CSRF token from cookies
+* How to use inline formset and one-to-many relationship
 * How to integrate with summernote (WYSIWYG editor)
 
 # Requirements

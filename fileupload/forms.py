@@ -1,9 +1,12 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 from django import forms
+from django.forms.models import inlineformset_factory
 from django.urls import reverse
 
-from .models import Post
+from .models import (
+    Post, Attachment
+)
 
 
 class AttachmentForm(forms.Form):
@@ -42,3 +45,10 @@ class PostFileAttachmentForm(PostFileForm):
             raise forms.ValidationError("PK must be integers.")
 
         return data
+
+
+AttachmentInlineFormSet = inlineformset_factory(
+    Post, Attachment,
+    fields=['file', 'name'],
+    extra=2
+)
