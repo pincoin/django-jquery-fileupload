@@ -1,4 +1,9 @@
 /* main.css */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 body {
     padding-top: 54px;
     margin-bottom: 60px;
