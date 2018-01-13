@@ -91,8 +91,35 @@ class PostCreateView(CreateView):
         return response
 
 
-class PostCreateView2(PostCreateView):
+class PostCreateView2(CreateView):
+    model = Post
     template_name = 'fileupload/post_create2.html'
+
+    def get_form_class(self):
+        if self.request.method == 'POST':
+            # Hidden fields for attachments must be validated.
+            return PostFileAttachmentForm
+        else:
+            # Hidden fields are not prepopulated but appended to form by AJAX.
+            return PostFileForm
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        # TODO: limit number
+
+        # Attachments are not related to any post yet.
+        attachments = Attachment.objects.filter(
+            pk__in=form.cleaned_data['attachments'],
+            post__isnull=True,
+        )
+        self.object.attachments.set(attachments)
+
+        return response
+
+
+class PostCreateView3(PostCreateView):
+    template_name = 'fileupload/post_create3.html'
 
     def get_form_class(self):
         if self.request.method == 'POST':
@@ -130,8 +157,8 @@ class PostUpdateView(UpdateView):
         return response
 
 
-class PostUpdateView2(PostUpdateView):
-    template_name = 'fileupload/post_update2.html'
+class PostUpdateView3(PostUpdateView):
+    template_name = 'fileupload/post_update3.html'
 
     def get_form_class(self):
         if self.request.method == 'POST':

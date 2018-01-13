@@ -4,8 +4,8 @@ from django.contrib import admin
 from django.urls import path
 
 from fileupload.views import (
-    HomeView, FileUploadView, PostListView, PostDetailView, PostCreateView, PostCreateView2, PostUpdateView,
-    PostUpdateView2
+    HomeView, FileUploadView, PostListView, PostDetailView, PostCreateView, PostCreateView2, PostCreateView3,
+    PostUpdateView, PostUpdateView3
 )
 
 urlpatterns = [
@@ -24,14 +24,17 @@ urlpatterns = [
     path('posts/create',
          PostCreateView.as_view(), name='post-create'),
 
-    path('posts/create-html',
+    path('posts/create2',
          PostCreateView2.as_view(), name='post-create-2'),
+
+    path('posts/create3',
+         PostCreateView3.as_view(), name='post-create-3'),
 
     path('posts/update/<int:pk>',
          PostUpdateView.as_view(), name='post-update'),
 
-    path('posts/update2/<int:pk>',
-         PostUpdateView2.as_view(), name='post-update-2'),
+    path('posts/update3/<int:pk>',
+         PostUpdateView3.as_view(), name='post-update-3'),
 
     path('admin/',
          admin.site.urls),
