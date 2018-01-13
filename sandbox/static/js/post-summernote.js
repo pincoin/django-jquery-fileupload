@@ -11,10 +11,13 @@ $(document).ready(function () {
                 $nImageInput = $nEditor.find('.note-image-input');
             },
             onImageUpload: function (files) {
-                $nImageInput.fileupload();
+                // Initializes file upload widget
+                $nImageInput.fileupload({
+                    url: '/upload'
+                });
 
+                // Upload files programmatically for browsers with support for XHR file uploads
                 var jqXHR = $nImageInput.fileupload('send', {
-                    url: '/upload',
                     files: files
                 }).done(function (data, textStatus, jqXHR) {
                     $.each(data.files, function (index, file) {
