@@ -11,11 +11,13 @@ $(document).ready(function () {
                 $nImageInput = $nEditor.find('.note-image-input');
             },
             onImageUpload: function (files) {
+                // https://github.com/blueimp/jQuery-File-Upload/wiki/API#initialization
                 // Initializes file upload widget
                 $nImageInput.fileupload({
                     url: '/upload'
                 });
 
+                // https://github.com/blueimp/jQuery-File-Upload/wiki/API#programmatic-file-upload
                 // Upload files programmatically for browsers with support for XHR file uploads
                 var jqXHR = $nImageInput.fileupload('send', {
                     files: files
