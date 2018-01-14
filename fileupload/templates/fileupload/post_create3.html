@@ -12,6 +12,12 @@
                 {% load crispy_forms_tags %}
                 <form action="" method="post">
                     {% crispy form %}
+                    <div class="form-group row">
+                        <div class="aab col-2 col-form-label"></div>
+                        <div class="col-10">
+                            <input name="submit" value="Write" class="btn btn-primary" type="submit">
+                        </div>
+                    </div>
                 </form>
             </div>
             <div id="files" class="card-footer">

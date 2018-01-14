@@ -37,7 +37,6 @@ class PostForm(forms.ModelForm):
         self.helper.form_group_wrapper_class = 'row'
         self.helper.label_class = 'col-2 col-form-label'
         self.helper.field_class = 'col-10'
-        self.helper.add_input(Submit('submit', 'Write', css_class='btn-primary'))
 
     class Meta:
         model = Post
