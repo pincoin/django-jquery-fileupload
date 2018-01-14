@@ -12,15 +12,20 @@ class AttachmentForm(forms.Form):
     files = forms.FileField(widget=forms.ClearableFileInput(
         attrs={'multiple': True}), required=False)
 
+
+class AttachmentInlineForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(AttachmentForm, self).__init__(*args, **kwargs)
+        super(AttachmentInlineForm, self).__init__(*args, **kwargs)
 
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.form_group_wrapper_class = 'row'
         self.helper.label_class = 'col-2 col-form-label'
         self.helper.field_class = 'col-10'
-        self.helper.add_input(Submit('submit', 'Write', css_class='btn-primary'))
+
+    class Meta:
+        model = Attachment
+        fields = ['name', 'file']
 
 
 class PostForm(forms.ModelForm):
@@ -58,6 +63,7 @@ class PostFileAttachmentForm(PostFileForm):
 
 AttachmentInlineFormSet = inlineformset_factory(
     Post, Attachment,
+    form=AttachmentInlineForm,
     fields=['file', 'name'],
-    extra=2
+    extra=2,
 )

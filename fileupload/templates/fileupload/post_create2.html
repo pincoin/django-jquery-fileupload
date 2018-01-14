@@ -12,7 +12,7 @@
             <div class="card-body">
                 <form method="post" enctype="multipart/form-data">
                     {% crispy form %}
-                    {% crispy formset %}
+                    {% crispy formset formset.form.helper %}
                 </form>
             </div>
             <div id="files" class="card-footer">
