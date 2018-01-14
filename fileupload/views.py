@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.http import JsonResponse
 from django.views.generic import (
     TemplateView, View, ListView, DetailView
@@ -7,7 +8,7 @@ from django.views.generic.edit import (
 )
 
 from .forms import (
-    AttachmentForm, PostFileForm, PostFileAttachmentForm, PostForm
+    AttachmentForm, PostFileForm, PostFileAttachmentForm, PostForm, AttachmentInlineFormSet
 )
 from .models import (
     Attachment, Post
@@ -79,8 +80,6 @@ class PostCreateView(CreateView):
     def form_valid(self, form):
         response = super().form_valid(form)
 
-        # TODO: limit number
-
         # Attachments are not related to any post yet.
         attachments = Attachment.objects.filter(
             pk__in=form.cleaned_data['attachments'],
@@ -93,29 +92,31 @@ class PostCreateView(CreateView):
 
 class PostCreateView2(CreateView):
     model = Post
+    form_class = PostForm
     template_name = 'fileupload/post_create2.html'
 
-    def get_form_class(self):
-        if self.request.method == 'POST':
-            # Hidden fields for attachments must be validated.
-            return PostFileAttachmentForm
+    def get_context_data(self, **kwargs):
+        context = super(PostCreateView2, self).get_context_data(**kwargs)
+
+        if self.request.POST:
+            context['formset'] = AttachmentInlineFormSet(self.request.POST, self.request.FILES)
         else:
-            # Hidden fields are not prepopulated but appended to form by AJAX.
-            return PostFileForm
+            context['formset'] = AttachmentInlineFormSet
+
+        return context
 
     def form_valid(self, form):
-        response = super().form_valid(form)
+        context = self.get_context_data()
+        formset = context['formset']
 
-        # TODO: limit number
+        with transaction.atomic():
+            self.object = form.save()
 
-        # Attachments are not related to any post yet.
-        attachments = Attachment.objects.filter(
-            pk__in=form.cleaned_data['attachments'],
-            post__isnull=True,
-        )
-        self.object.attachments.set(attachments)
+            if formset.is_valid():
+                formset.instance = self.object
+                formset.save()
 
-        return response
+        return super().form_valid(form)
 
 
 class PostCreateView3(PostCreateView):
@@ -144,8 +145,6 @@ class PostUpdateView(UpdateView):
 
     def form_valid(self, form):
         response = super().form_valid(form)
-
-        # TODO: limit number
 
         # Attachments are not related to any post yet.
         attachments = Attachment.objects.filter(

@@ -8,13 +8,15 @@
             <div class="card-header">
                 <h2>Write a text post with inline formset</h2>
             </div>
+            {% load crispy_forms_tags %}
             <div class="card-body">
-                {% load crispy_forms_tags %}
-                {% crispy form %}
+                <form method="post" enctype="multipart/form-data">
+                    {% crispy form %}
+                    {% crispy formset %}
+                </form>
             </div>
             <div id="files" class="card-footer">
-                <ul>
-                </ul>
+
             </div>
         </div>
     </div>

@@ -10,7 +10,9 @@
             </div>
             <div class="card-body">
                 {% load crispy_forms_tags %}
-                {% crispy form %}
+                <form action="" method="post">
+                    {% crispy form %}
+                </form>
             </div>
             <div id="files" class="card-footer">
                 <ul>
@@ -30,5 +32,5 @@
     <script src="{% static 'js/vendor/jquery.fileupload.js' %}"></script>
     <script src="{% static 'js/csrf-cookie.js' %}"></script>
     <script src="{% static "js/vendor/summernote-bs4.js" %}"></script>
-    <script src="{% static "js/post-summernote.js" %}"> </script>
+    <script src="{% static "js/post-summernote.js" %}"></script>
 {% endblock %}
